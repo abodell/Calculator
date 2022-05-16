@@ -25,3 +25,16 @@ function operate(operator, val1, val2) {
         return divide(val1, val2);
     }
 }
+
+const operator = '';
+const val1 = 0;
+const val2 = 0;
+
+const nums = document.querySelectorAll('.btn.number');
+const operators = document.querySelectorAll('.btn.operator');
+// loop through the nodelist and create eventListener for each button
+for (let i = 0; i < nums.length; i++) {
+    nums[i].addEventListener('click', (event) =>{
+        console.log(event.target.textContent);
+    });
+}
