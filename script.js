@@ -42,18 +42,28 @@ function setOperator(string) {
     } else if (string === '%') {
         operator = '%';
     }
+    operatorHit = true;
+    console.log(operatorHit);
 }
 
 let operator = '';
-const val1 = 0;
-const val2 = 0;
+let val1 = '';
+let val2 = '';
+let operatorHit = false;
 
 const nums = document.querySelectorAll('.btn.number');
 const operations = document.querySelectorAll('.btn.operation');
+const screen = document.querySelector('.screen');
 // loop through the nodelist and create eventListener for each button
 for (let i = 0; i < nums.length; i++) {
     nums[i].addEventListener('click', (event) =>{
-        console.log(event.target.textContent);
+        if (!operatorHit) {
+            val1 += event.target.textContent;
+            screen.textContent = val1;
+        } else {
+            val2 += event.target.textContent;
+            screen.textContent = val2;
+        }
     });
 }
 // do the same thing for the operations
