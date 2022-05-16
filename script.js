@@ -21,20 +21,45 @@ function operate(operator, val1, val2) {
         return subtract(val1, val2);
     } else if (operator === '*') {
         return multiply(val1, val2);
-    } else {
+    } else if (operator === '/') {
         return divide(val1, val2);
+    } else if (operator === '%') {
+        return multiply(val1 / 100, val2);
     }
 }
 
-const operator = '';
+function setOperator(string) {
+    if (string === 'X') {
+        operator = '*';
+    } else if (string === '+') {
+        operator = '+';
+    } else if (string === '-') {
+        operator = '-';
+    } else if (string === '/') {
+        operator = '/'
+    } else if (string === '√') {
+        operator = '√';
+    } else if (string === '%') {
+        operator = '%';
+    }
+}
+
+let operator = '';
 const val1 = 0;
 const val2 = 0;
 
 const nums = document.querySelectorAll('.btn.number');
-const operators = document.querySelectorAll('.btn.operator');
+const operations = document.querySelectorAll('.btn.operation');
 // loop through the nodelist and create eventListener for each button
 for (let i = 0; i < nums.length; i++) {
     nums[i].addEventListener('click', (event) =>{
         console.log(event.target.textContent);
+    });
+}
+// do the same thing for the operations
+for (let i = 0; i < operations.length; i++) {
+    operations[i].addEventListener('click', (event) => {
+        setOperator(event.target.textContent);
+        console.log(operator);
     });
 }
