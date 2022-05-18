@@ -35,6 +35,7 @@ function operate(operator, val1, val2) {
     } else if (operator === '%') {
         return multiply(val1 / 100, val2);
     }
+    decimalCount = 0;
 }
 
 function setOperation(string) {
@@ -50,12 +51,14 @@ function setOperation(string) {
         operator = '%';
     }
     operationHit = true;
+    decimalCount = 0;
 }
 
 let operator = '';
 let val1 = '';
 let val2 = '';
 let operationHit = false;
+let decimalCount = 0;
 
 const nums = document.querySelectorAll('.btn.number');
 const operations = document.querySelectorAll('.btn.operation');
@@ -91,13 +94,14 @@ equals.addEventListener('click', () => {
 });
 
 decimal.addEventListener('click', () => {
-    if (!operationHit) {
+    if (!operationHit && decimalCount < 1) {
         val1 += '.';
         screen.textContent = val1;
-    } else {
+    } else if (operationHit && decimalCount < 1) {
         val2 += '.';
         screen.textContent = val2;
     }
+    decimalCount++;
 });
 
 clear.addEventListener('click', () => {
@@ -121,3 +125,53 @@ changeSign.addEventListener('click', () => {
     num *= -1;
     screen.textContent = num.toString();
 });
+
+window.addEventListener('keydown', keyboardHandler);
+
+function keyboardHandler(event) {
+    if (event.key >= 0 && event.key <= 9) {
+        if (!operationHit) {
+            val1 += event.key;
+            screen.textContent = val1;
+        } else {
+            val2 += event.key;
+            screen.textContent = val2;
+        }
+    }
+    if (event.key == 'X' || event.key == "/" || event.key == '+' || event.key == '-') {
+        setOperation(event.key);
+    }
+
+    if (event.key == 'Enter' || event.key == '=') {
+        screen.textContent = operate(operator, Number(val1), Number(val2));
+        val1 = screen.textContent;
+        val2 = '';
+    }
+
+    if (event.key == 'Backspace') {
+        screen.textContent = screen.textContent.slice(0, -1);
+        if (!operationHit) {
+            val1 = screen.textContent;
+        } else {
+            val2 = screen.textContent;
+        }
+    }
+
+    if (event.key == '.') {
+        if (!operationHit && decimalCount < 1) {
+            val1 += '.';
+            screen.textContent = val1;
+        } else if (operationHit && decimalCount < 1) {
+            val2 += '.';
+            screen.textContent = val2;
+        }
+        decimalCount++;
+    }
+
+    if (event.key == 'Escape') {
+        screen.textContent = '0';
+        val1 = '';
+        val2 = '';
+        operationHit = false;
+    }
+}
