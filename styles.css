@@ -43,6 +43,7 @@ body {
     padding-left: 10px;
     font-size: 40px;
     border-radius: 1%;
+    min-height: 107px;
     border: 2px solid #A5A3A2;
 }
 
@@ -67,8 +68,16 @@ body {
     position: relative;
 }
 
+.btn.number {
+    background-color: #DF5E26;
+}
+
 .btn:hover {
     background-color: #BEB7B4;
+}
+
+.btn.number:hover {
+    background-color: #C2501F;
 }
 
 .footer {
