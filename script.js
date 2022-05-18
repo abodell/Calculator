@@ -1,28 +1,24 @@
 function add(val1, val2) {
     let ans = val1 + val2;
-    val1 = val2;
-    val2 = '';
+    ans = (Math.round(ans * 100) / 100);
     return ans;
 }
 
 function subtract(val1, val2) {
     let ans = val1  - val2;
-    val1 = val2;
-    val2 = '';
+    ans = (Math.round(ans * 100) / 100);
     return ans;
 }
 
 function multiply(val1, val2) {
     let ans = val1 * val2;
-    val1 = val2;
-    val2 = '';
+    ans = (Math.round(ans * 100) / 100);
     return ans;
 }
 
 function divide(val1, val2) {
     let ans = val1 / val2;
-    val1 = val2;
-    val2 = '';
+    ans = (Math.round(ans * 100) / 100)
     return ans;
 }
 
@@ -53,12 +49,7 @@ function setOperation(string) {
     } else if (string === '%') {
         operator = '%';
     }
-
-    if (operationHit) {
-        operationHit = false;
-    } else {
-        operationHit = true;
-    }
+    operationHit = true;
 }
 
 let operator = '';
@@ -70,7 +61,10 @@ const nums = document.querySelectorAll('.btn.number');
 const operations = document.querySelectorAll('.btn.operation');
 const screen = document.querySelector('.screen');
 const equals = document.querySelector('.btn.equals');
-const operators = document.querySelectorAll('.btn.operator')
+const clear = document.querySelector('.btn.clear');
+const changeSign = document.querySelector('.btn.sign');
+const decimal = document.querySelector('.btn.decimal');
+const delButton = document.querySelector('.btn.delete');
 // loop through the nodelist and create eventListener for each button
 for (let i = 0; i < nums.length; i++) {
     nums[i].addEventListener('click', (event) =>{
@@ -91,5 +85,39 @@ for (let i = 0; i < operations.length; i++) {
 }
 
 equals.addEventListener('click', () => {
-    screen.textContent = operate(operator, parseInt(val1), parseInt(val2));
+    screen.textContent = operate(operator, Number(val1), Number(val2));
+    val1 = screen.textContent;
+    val2 = '';
+});
+
+decimal.addEventListener('click', () => {
+    if (!operationHit) {
+        val1 += '.';
+        screen.textContent = val1;
+    } else {
+        val2 += '.';
+        screen.textContent = val2;
+    }
+});
+
+clear.addEventListener('click', () => {
+    screen.textContent = '0';
+    val1 = '';
+    val2 = '';
+    operationHit = false;
+});
+
+delButton.addEventListener('click', () => {
+    screen.textContent = screen.textContent.slice(0, -1);
+    if (!operationHit) {
+        val1 = screen.textContent;
+    } else {
+        val2 = screen.textContent;
+    }
+});
+
+changeSign.addEventListener('click', () => {
+    let num = Number(screen.textContent);
+    num *= -1;
+    screen.textContent = num.toString();
 });
