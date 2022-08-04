@@ -124,6 +124,7 @@ changeSign.addEventListener('click', () => {
     let num = Number(screen.textContent);
     num *= -1;
     screen.textContent = num.toString();
+    val1 = "-" + val1;
 });
 
 window.addEventListener('keydown', keyboardHandler);
